@@ -49,20 +49,19 @@ class myHomePage extends StatelessWidget{
             title: new Text('dsdd'),
           ),
       //softWrap 为 false 时候，说明不允许换行，这个时候相当于 maxLines 为 1.
-          body:  Text(
-              r'$$5633我的生活3',
-
-            style: new TextStyle(fontSize: 20.0,color: Colors.teal[500],
-                decoration: TextDecoration.underline,decorationColor:Colors.blue,fontWeight:FontWeight.w800,
-
+          body: new RichText(text: new TextSpan(
+            text: 'button tap',
+            style: new TextStyle(
+              inherit: true,
+              color:Colors.blue,
             ),
-//            softWrap: true
-            textScaleFactor:1.0,
-            overflow: TextOverflow.clip,
-//            maxLines: 3,
-            textAlign: TextAlign.left,
-              semanticsLabel:'Text semanticsLabel'
-          ),
+            children: <TextSpan>[
+              new TextSpan(text: '我知道',
+              style: new TextStyle(fontWeight: FontWeight.w200,color: Colors.green)),
+              new TextSpan(text: '123'),
+              new TextSpan(text: '生活',style: new TextStyle(color: Colors.grey)),
+            ],
+          ))
     );
   }
 }
