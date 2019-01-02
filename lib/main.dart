@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:transparent_image/transparent_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 void main() => runApp(new MyApp());
 
@@ -49,19 +51,24 @@ class myHomePage extends StatelessWidget{
             title: new Text('dsdd'),
           ),
       //softWrap 为 false 时候，说明不允许换行，这个时候相当于 maxLines 为 1.
-          body: new RichText(text: new TextSpan(
-            text: 'button tap',
-            style: new TextStyle(
-              inherit: true,
-              color:Colors.blue,
+          body: new ListView(
+            children: <Widget>[
+             new Image.asset('images/adv_mngcente_bidding.png'),
+              new Divider(),
+              new Image(image: new AssetImage('images/adv_mngcente_bidding.png')),
+             new Divider(),
+//              普通网络加载
+              new Image.network('http://img03.tooopen.com/uploadfile/downs/images/20110714/sy_20110714135215645030.jpg'),
+//           从缓存加载图片
+            new CachedNetworkImage(
+                imageUrl: 'http://img03.tooopen.com/uploadfile/downs/images/20110714/sy_20110714135215645030.jpg',
+              placeholder: new CircularProgressIndicator(),
+              errorWidget: new Icon(Icons.error),
             ),
-            children: <TextSpan>[
-              new TextSpan(text: '我知道',
-              style: new TextStyle(fontWeight: FontWeight.w200,color: Colors.green)),
-              new TextSpan(text: '123'),
-              new TextSpan(text: '生活',style: new TextStyle(color: Colors.grey)),
+//              淡入动画加载图片
+            new FadeInImage.memoryNetwork(placeholder: kTransparentImage, image: 'http://img03.tooopen.com/uploadfile/downs/images/20110714/sy_20110714135215645030.jpg')
             ],
-          ))
+          )
     );
   }
 }
