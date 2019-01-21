@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:english_words/english_words.dart';
 
-void main() => runApp(new LearnScaffold());
+void main() => runApp(new LearnRoutes());
 
 class MyApp extends StatelessWidget {
   @override
@@ -38,10 +39,6 @@ class _LearnScaffoldState extends State<LearnScaffold> {
        _counter++;
      });
    }
-
-
-
-  
 
   
   @override
@@ -153,6 +150,7 @@ class _LearnScaffoldState extends State<LearnScaffold> {
       home: new Scaffold(
         appBar: new AppBar(
           title: new Text('顶部title'),
+//          backgroundColor: Colors.red,
           centerTitle: true,
           actions: <Widget>[
             new IconButton(icon: new Icon(Icons.add_alarm), onPressed: (){
@@ -160,6 +158,7 @@ class _LearnScaffoldState extends State<LearnScaffold> {
              _counter++;
               });
             }),
+
             new PopupMenuButton(
                 itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
                   new PopupMenuItem(child: new Text('sort by'),value: 'price',),
@@ -234,4 +233,40 @@ class _LearnScaffoldState extends State<LearnScaffold> {
   }
   
 
+}
+
+class LearnRoutes extends StatelessWidget{
+@override
+  Widget build(BuildContext context) {
+
+    // TODO: implement build
+    return new MaterialApp(
+      title: '杀掉进程中显示的',
+      home: new Scaffold(
+        body: new Center(
+//          child: new Padding(child: new Text('dsdsdsdsd'),padding: EdgeInsets.only(bottom: 8.0)),
+          child: new RandomWords(),
+        ),
+        
+      ),
+    );
+  }
+}
+
+//添加一个 有状态的部件
+class RandomWords extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return new  RandomWordsState();
+  }
+}
+
+class RandomWordsState extends State<RandomWords>{
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    final wordPair = new WordPair.random();
+    return new Text(wordPair.asPascalCase);
+  }
 }
