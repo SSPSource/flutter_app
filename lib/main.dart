@@ -263,10 +263,51 @@ class RandomWords extends StatefulWidget{
 }
 
 class RandomWordsState extends State<RandomWords>{
+  //   该变量以下划线（_）开头，在Dart语言中使用下划线前缀标识符，会强制其变成私有的
+  final _suggestions = <WordPair>[];
+  final _biggerFont = const TextStyle(fontSize: 18.0);
+
+  Widget _buildRow(WordPair pair){
+    return new ListTile(
+      title: new Text(
+        pair.asPascalCase,
+        style: _biggerFont,
+      ),
+    );
+  }
+
+  Widget _buildSuggestions(){
+//    ListView的builder工厂构造函数允许您按需建立一个懒加载的列表视图。
+    return new ListView.builder(
+      padding: const EdgeInsets.all(16.0),
+        itemBuilder: (context,i){
+          if(i.isOdd) return new Divider();
+          final index = i ~/ 2;
+          if (index >= _suggestions.length){
+            _suggestions.addAll(generateWordPairs().take(10));
+
+          }
+          print('=====listview row===$index');
+          return _buildRow(_suggestions[index]);
+        }
+    );
+  }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    final wordPair = new WordPair.random();
-    return new Text(wordPair.asPascalCase);
+
+
+
+  return new Scaffold(
+    appBar: new AppBar(
+      title: new Text('listview'),
+    ),
+    body: _buildSuggestions() ,
+  );
+
+
+
+
+
   }
 }
