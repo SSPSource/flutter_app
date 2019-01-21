@@ -266,13 +266,29 @@ class RandomWordsState extends State<RandomWords>{
   //   该变量以下划线（_）开头，在Dart语言中使用下划线前缀标识符，会强制其变成私有的
   final _suggestions = <WordPair>[];
   final _biggerFont = const TextStyle(fontSize: 18.0);
+//  set集合 Set比List更合适，因为Set中不允许重复的值。
+  final _saved = new Set<WordPair>();
 
   Widget _buildRow(WordPair pair){
+
+    final alreadySaved = _saved.contains(pair);
     return new ListTile(
       title: new Text(
         pair.asPascalCase,
         style: _biggerFont,
       ),
+      trailing: new Icon( alreadySaved ? Icons.favorite : Icons.favorite_border ,
+          color: alreadySaved ? Colors.red : null,),
+      onTap: () {
+//        在Flutter的响应式风格的框架中，调用setState() 会为State对象触发build()方法，从而导致对UI的更新
+        setState(() {
+          if (alreadySaved) {
+            _saved.remove(pair);
+          }else{
+            _saved.add(pair);
+          }
+        });
+      }
     );
   }
 
