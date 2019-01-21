@@ -242,6 +242,9 @@ class LearnRoutes extends StatelessWidget{
     // TODO: implement build
     return new MaterialApp(
       title: '杀掉进程中显示的',
+      theme: new ThemeData(
+        primaryColor: Colors.red,
+      ),
       home: new Scaffold(
         body: new Center(
 //          child: new Padding(child: new Text('dsdsdsdsd'),padding: EdgeInsets.only(bottom: 8.0)),
