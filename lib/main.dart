@@ -267,6 +267,7 @@ class RandomWordsState extends State<RandomWords>{
   final _suggestions = <WordPair>[];
   final _biggerFont = const TextStyle(fontSize: 18.0);
 //  set集合 Set比List更合适，因为Set中不允许重复的值。
+//  没有顺序且不能重复的集合，所以不能通过索引去获取值
   final _saved = new Set<WordPair>();
 
   Widget _buildRow(WordPair pair){
@@ -308,15 +309,50 @@ class RandomWordsState extends State<RandomWords>{
         }
     );
   }
+
+  void _pushSaved (){
+    Navigator.of(context).push(
+       new MaterialPageRoute(
+    builder: (context){
+      final tiles = _saved.map(
+          (pair){
+            return new ListTile(
+              title: new Text(pair.asPascalCase,style: _biggerFont,),
+              trailing: new IconButton(icon: new Icon(Icons.add), onPressed: (){
+
+              }),
+
+            );
+          }
+      );
+      final dd  = _saved.map(
+          (pair){
+            return pair.asLowerCase;
+          }
+      );
+      print('==title==$dd');
+      final  divided = ListTile.divideTiles(tiles: tiles,context: context,).toList();
+
+      return new Scaffold(appBar: new AppBar(title: new Text('sss'),),
+      body: new ListView(children: divided),);
+    }
+    ),
+
+    );
+
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
 
-
-
   return new Scaffold(
     appBar: new AppBar(
       title: new Text('listview'),
+      actions: <Widget>[
+        new IconButton(icon: new Icon(Icons.add), onPressed: _pushSaved),
+      ],
+      
     ),
     body: _buildSuggestions() ,
   );
